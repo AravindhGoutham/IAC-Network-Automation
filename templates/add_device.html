@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Device</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function toggleOptions() {
+      const deviceType = document.getElementById("device_type").value;
+      document.getElementById("ce-options").style.display =
+        (deviceType === "CE") ? "block" : "none";
+      document.getElementById("core-options").style.display =
+        (deviceType === "Core") ? "block" : "none";
+    }
+
+    // CE helpers
+    function addVlanField() {
+      const container = document.getElementById("vlan-list");
+      const div = document.createElement("div");
+      div.className = "flex gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="vlans[][id]" placeholder="VLAN ID" class="border p-2 w-24">
+        <input type="text" name="vlans[][name]" placeholder="VLAN Name" class="border p-2 flex-1">
+      `;
+      container.appendChild(div);
+    }
+
+    function addInterfaceField() {
+      const container = document.getElementById("interface-list");
+      const div = document.createElement("div");
+      div.className = "grid grid-cols-5 gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="interfaces[][name]" placeholder="Interface Name" class="border p-2">
+        <input type="text" name="interfaces[][ipv4]" placeholder="IPv4 Address" class="border p-2">
+        <input type="text" name="interfaces[][ipv6]" placeholder="IPv6 Address" class="border p-2">
+        <select name="interfaces[][mode]" class="border p-2">
+          <option value="access">Access</option>
+          <option value="trunk">Trunk</option>
+          <option value="routed">No Switchport</option>
+        </select>
+        <input type="text" name="interfaces[][vlan]" placeholder="VLAN (if access)" class="border p-2">
+      `;
+      container.appendChild(div);
+    }
+
+    // Shared route helpers
+    function addIPv4RouteField(containerId) {
+      const container = document.getElementById(containerId);
+      const div = document.createElement("div");
+      div.className = "flex gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="ipv4_routes[][prefix]" placeholder="Prefix (e.g. 0.0.0.0/0)" class="border p-2 w-1/2">
+        <input type="text" name="ipv4_routes[][next_hop]" placeholder="Next Hop" class="border p-2 w-1/2">
+      `;
+      container.appendChild(div);
+    }
+
+    function addIPv6RouteField(containerId) {
+      const container = document.getElementById(containerId);
+      const div = document.createElement("div");
+      div.className = "flex gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="ipv6_routes[][prefix]" placeholder="Prefix (e.g. ::/0)" class="border p-2 w-1/2">
+        <input type="text" name="ipv6_routes[][next_hop]" placeholder="Next Hop" class="border p-2 w-1/2">
+      `;
+      container.appendChild(div);
+    }
+
+    // Core helpers
+    function addCoreInterfaceField() {
+      const container = document.getElementById("core-interface-list");
+      const div = document.createElement("div");
+      div.className = "grid grid-cols-6 gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="core_interfaces[][name]" placeholder="Interface Name" class="border p-2">
+        <input type="text" name="core_interfaces[][ipv4]" placeholder="IPv4 Address" class="border p-2">
+        <input type="text" name="core_interfaces[][ipv6]" placeholder="IPv6 Address" class="border p-2">
+        <select name="core_interfaces[][ospf]" class="border p-2">
+          <option value="no">IPv6 OSPF: No</option>
+          <option value="yes">IPv6 OSPF: Yes</option>
+        </select>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" name="core_interfaces[][dhcp_v4]" value="1"> DHCPv4
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" name="core_interfaces[][dhcp_v6]" value="1"> DHCPv6
+        </label>
+      `;
+      container.appendChild(div);
+    }
+
+    function addDHCPSubnetField() {
+      const container = document.getElementById("dhcp-subnet-list");
+      const div = document.createElement("div");
+      div.className = "grid grid-cols-3 gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="dhcp_subnets[][prefix]" placeholder="Subnet Prefix (e.g. 192.168.10.0/24)" class="border p-2">
+        <input type="text" name="dhcp_subnets[][range]" placeholder="Range (e.g. 192.168.10.3-192.168.10.253)" class="border p-2">
+        <input type="text" name="dhcp_subnets[][gateway]" placeholder="Default Gateway" class="border p-2">
+      `;
+      container.appendChild(div);
+    }
+
+    function addOSPFNetworkField() {
+      const container = document.getElementById("ospf-network-list");
+      const div = document.createElement("div");
+      div.className = "flex gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="ospf_networks[][prefix]" placeholder="Network Prefix" class="border p-2 w-1/2">
+        <input type="text" name="ospf_networks[][area]" placeholder="Area" class="border p-2 w-1/2">
+      `;
+      container.appendChild(div);
+    }
+
+    function addRIPNetworkField() {
+      const container = document.getElementById("rip-network-list");
+      const div = document.createElement("div");
+      div.className = "flex gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="rip_networks[]" placeholder="RIP Network" class="border p-2 w-full">
+      `;
+      container.appendChild(div);
+    }
+  </script>
+</head>
+<body class="p-10 bg-gray-100">
+  <h1 class="text-2xl font-bold mb-4">Add Device</h1>
+  <form action="{{ url_for('add_device') }}" method="post">
+    <div class="mb-4">
+      <label class="block">Hostname:</label>
+      <input type="text" name="hostname" class="border p-2 w-full" required>
+    </div>
+
+    <div class="mb-4">
+      <label class="block">Device Type:</label>
+      <select id="device_type" name="device_type" onchange="toggleOptions()" class="border p-2 w-full">
+        <option value="CE">CE</option>
+        <option value="Core">Core</option>
+        <option value="PE">PE</option>
+      </select>
+    </div>
+
+    <!-- CE Options -->
+    <div id="ce-options" style="display:none;">
+      <h2 class="font-bold mb-2">VLAN Configuration</h2>
+      <div id="vlan-list"></div>
+      <button type="button" onclick="addVlanField()" class="bg-blue-500 text-white px-3 py-1 rounded">+ Add VLAN</button>
+
+      <h2 class="font-bold mt-6 mb-2">Interface Details</h2>
+      <div id="interface-list"></div>
+      <button type="button" onclick="addInterfaceField()" class="bg-green-500 text-white px-3 py-1 rounded">+ Add Interface</button>
+
+      <h2 class="font-bold mt-6 mb-2">Static IPv4 Routes</h2>
+      <div id="ce-ipv4-route-list"></div>
+      <button type="button" onclick="addIPv4RouteField('ce-ipv4-route-list')" class="bg-purple-500 text-white px-3 py-1 rounded">+ Add IPv4 Route</button>
+
+      <h2 class="font-bold mt-6 mb-2">Static IPv6 Routes</h2>
+      <div id="ce-ipv6-route-list"></div>
+      <button type="button" onclick="addIPv6RouteField('ce-ipv6-route-list')" class="bg-pink-500 text-white px-3 py-1 rounded">+ Add IPv6 Route</button>
+    </div>
+
+    <!-- Core Options -->
+    <div id="core-options" style="display:none;">
+      <h2 class="font-bold mt-6 mb-2">Core Interface Details</h2>
+      <div id="core-interface-list"></div>
+      <button type="button" onclick="addCoreInterfaceField()" class="bg-green-500 text-white px-3 py-1 rounded">+ Add Interface</button>
+
+      <h2 class="font-bold mt-6 mb-2">DHCP Server Configuration</h2>
+      <div id="dhcp-subnet-list"></div>
+      <button type="button" onclick="addDHCPSubnetField()" class="bg-blue-500 text-white px-3 py-1 rounded">+ Add DHCP Subnet</button>
+
+      <h2 class="font-bold mt-6 mb-2">Static IPv4 Routes</h2>
+      <div id="core-ipv4-route-list"></div>
+      <button type="button" onclick="addIPv4RouteField('core-ipv4-route-list')" class="bg-purple-500 text-white px-3 py-1 rounded">+ Add IPv4 Route</button>
+
+      <h2 class="font-bold mt-6 mb-2">Static IPv6 Routes</h2>
+      <div id="core-ipv6-route-list"></div>
+      <button type="button" onclick="addIPv6RouteField('core-ipv6-route-list')" class="bg-pink-500 text-white px-3 py-1 rounded">+ Add IPv6 Route</button>
+
+      <h2 class="font-bold mt-6 mb-2">OSPF Configuration</h2>
+      <label class="block">Router ID:</label>
+      <input type="text" name="ospf_router_id" placeholder="e.g. 2.2.2.2" class="border p-2 w-full mb-2">
+      <div id="ospf-network-list"></div>
+      <button type="button" onclick="addOSPFNetworkField()" class="bg-indigo-500 text-white px-3 py-1 rounded">+ Add OSPF Network</button>
+
+      <h2 class="font-bold mt-6 mb-2">RIP Configuration</h2>
+      <div id="rip-network-list"></div>
+      <button type="button" onclick="addRIPNetworkField()" class="bg-yellow-500 text-white px-3 py-1 rounded">+ Add RIP Network</button>
+    </div>
+
+    <div class="mt-6">
+      <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded">Submit</button>
+    </div>
+  </form>
+</body>
+</html>

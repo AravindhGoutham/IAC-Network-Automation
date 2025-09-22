@@ -1,0 +1,110 @@
+hostname: R2
+
+username: admin
+password: sha512:$6$SXqh.nnmoUzvwWhz$bM2jYwiWvSxeowuFu223l.B.VclXr3aVs2A1qCRBWrDiaZaLPwIHytIYUILD/49jf7nACHRZtl8FtkSotYLi60
+
+snmp:
+  community: public
+  host: 10.0.0.1
+  traps:
+    - ospf if-state-change
+    - ospfv3 if-state-change
+    - snmp link-down
+    - snmp link-up
+    - vrrp
+
+vlans:
+  - id: 10
+    name: Vlan-10
+  - id: 20
+    name: Vlan-20
+
+dhcp:
+  subnets:
+    - prefix: 192.168.10.0/24
+      range: { start: 192.168.10.3, end: 192.168.10.253 }
+      gateway: 192.168.10.254
+    - prefix: 192.168.20.0/24
+      range: { start: 192.168.20.3, end: 192.168.20.253 }
+      gateway: 192.168.20.254
+    - prefix: 2001:ab10::/64
+      range: { start: 2001:ab10::4, end: 2001:ab10::ffff }
+    - prefix: 2001:ab20::/64
+      range: { start: 2001:ab20::4, end: 2001:ab20::ffff }
+    - prefix: 2001:ab30::/64
+      range: { start: 2001:ab30::4, end: 2001:ab30::ffff }
+
+interfaces:
+  - name: Ethernet1
+    mode: trunk
+  - name: Ethernet1.10
+    encapsulation: 10
+    ipv4: 192.168.10.2/24
+    ipv6: 2001:ab10::2/64
+    dhcp_server_v4: true
+    dhcp_server_v6: true
+    vrrp:
+      group: 10
+      ipv4: 192.168.10.254
+      ipv6: 2001:ab10::3
+  - name: Ethernet1.20
+    encapsulation: 20
+    ipv4: 192.168.20.2/24
+    ipv6: 2001:ab20::2/64
+    dhcp_server_v4: true
+    dhcp_server_v6: true
+    vrrp:
+      group: 20
+      ipv4: 192.168.20.254
+      ipv6: 2001:ab20::3
+  - name: Ethernet1.30
+    encapsulation: 30
+    ipv6: 2001:ab30::2/64
+    dhcp_server_v6: true
+    vrrp:
+      group: 30
+      ipv6: 2001:ab30::3
+  - name: Ethernet2
+    mode: routed
+    ipv4: 192.168.0.26/30
+    ipv6: 2001:2::1/64
+    dhcp_server_v4: true
+    ospf:
+      process_id: 1
+      area: 0.0.0.0
+      ipv6: true
+  - name: Ethernet5
+    mode: routed
+    ipv4: 10.0.0.5/24
+
+management:
+  ipv4: 172.20.20.11/24
+  ipv6: 3fff:172:20:20::b/64
+
+static_routes:
+  - prefix: 0.0.0.0/0
+    next_hop: 172.20.20.1
+  - prefix: "::/0"
+    next_hop: 3fff:172:20:20::1
+
+ospf:
+  process_id: 1
+  redistribute:
+    - connected
+    - rip
+  networks:
+    - { prefix: 192.168.0.24/30, area: 0.0.0.0 }
+  max_lsa: 12000
+
+ospfv3:
+  process_id: 1
+  router_id: 2.2.2.2
+  redistribute:
+    - connected
+
+rip:
+  networks:
+    - 192.168.10.0/24
+    - 192.168.20.0/24
+  redistribute:
+    - ospf

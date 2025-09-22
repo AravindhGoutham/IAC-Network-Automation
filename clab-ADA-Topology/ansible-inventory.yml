@@ -1,0 +1,49 @@
+all:
+  vars:
+    # The generated inventory is assumed to be used from the clab host.
+    # Hence no http proxy should be used. Therefore we make sure the http
+    # module does not attempt using any global http proxy.
+    ansible_httpapi_use_proxy: false
+  children:
+    ceos:
+      vars:
+        # ansible_connection: set ansible_connection variable if required
+        ansible_user: admin
+        ansible_password: admin
+      hosts:
+        clab-ADA-Topology-R1:
+          ansible_host: 172.20.20.18
+        clab-ADA-Topology-R2:
+          ansible_host: 172.20.20.11
+        clab-ADA-Topology-R3:
+          ansible_host: 172.20.20.10
+        clab-ADA-Topology-R4:
+          ansible_host: 172.20.20.5
+        clab-ADA-Topology-R5:
+          ansible_host: 172.20.20.17
+        clab-ADA-Topology-S1:
+          ansible_host: 172.20.20.16
+        clab-ADA-Topology-S2:
+          ansible_host: 172.20.20.13
+        clab-ADA-Topology-S3:
+          ansible_host: 172.20.20.14
+        clab-ADA-Topology-S4:
+          ansible_host: 172.20.20.8
+        clab-ADA-Topology-mgmt-switch:
+          ansible_host: 172.20.20.9
+    host:
+      hosts:
+        clab-ADA-Topology-NMAS:
+          ansible_host: 
+    linux:
+      hosts:
+        clab-ADA-Topology-H1:
+          ansible_host: 172.20.20.12
+        clab-ADA-Topology-H2:
+          ansible_host: 172.20.20.15
+        clab-ADA-Topology-H3:
+          ansible_host: 172.20.20.6
+        clab-ADA-Topology-H4:
+          ansible_host: 172.20.20.7
+        clab-ADA-Topology-Webserver:
+          ansible_host: 172.20.20.4

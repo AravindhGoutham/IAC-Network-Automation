@@ -1,0 +1,886 @@
+{
+  "name": "ADA-Topology",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-76bc1cfde153",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "mtu": 1500,
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": [],
+  "nodes": {
+    "H1": {
+      "index": "0",
+      "shortname": "H1",
+      "longname": "clab-ADA-Topology-H1",
+      "fqdn": "H1.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/H1",
+      "kind": "linux",
+      "image": "ubuntu-custom:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.12",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::c",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/H1",
+        "clab-node-longname": "clab-ADA-Topology-H1",
+        "clab-node-name": "H1",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 80,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "H2": {
+      "index": "1",
+      "shortname": "H2",
+      "longname": "clab-ADA-Topology-H2",
+      "fqdn": "H2.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/H2",
+      "kind": "linux",
+      "image": "ubuntu-custom:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.15",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::f",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/H2",
+        "clab-node-longname": "clab-ADA-Topology-H2",
+        "clab-node-name": "H2",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 80,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "H3": {
+      "index": "2",
+      "shortname": "H3",
+      "longname": "clab-ADA-Topology-H3",
+      "fqdn": "H3.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/H3",
+      "kind": "linux",
+      "image": "ubuntu-custom:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.6",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::6",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/H3",
+        "clab-node-longname": "clab-ADA-Topology-H3",
+        "clab-node-name": "H3",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 80,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "H4": {
+      "index": "3",
+      "shortname": "H4",
+      "longname": "clab-ADA-Topology-H4",
+      "fqdn": "H4.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/H4",
+      "kind": "linux",
+      "image": "ubuntu-custom:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.7",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::7",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/H4",
+        "clab-node-longname": "clab-ADA-Topology-H4",
+        "clab-node-name": "H4",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 80,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "NMAS": {
+      "index": "4",
+      "shortname": "NMAS",
+      "longname": "clab-ADA-Topology-NMAS",
+      "fqdn": "NMAS.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/NMAS",
+      "kind": "host",
+      "image": "",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "",
+      "mgmt-ipv4-prefix-length": 0,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "host",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/NMAS",
+        "clab-node-longname": "clab-ADA-Topology-NMAS",
+        "clab-node-name": "NMAS",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "R1": {
+      "index": "5",
+      "shortname": "R1",
+      "longname": "clab-ADA-Topology-R1",
+      "fqdn": "R1.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/R1",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.18",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::12",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:d2:a3:67",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/R1",
+        "clab-node-longname": "clab-ADA-Topology-R1",
+        "clab-node-name": "R1",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "R2": {
+      "index": "6",
+      "shortname": "R2",
+      "longname": "clab-ADA-Topology-R2",
+      "fqdn": "R2.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/R2",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.11",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::b",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:49:bf:f1",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/R2",
+        "clab-node-longname": "clab-ADA-Topology-R2",
+        "clab-node-name": "R2",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "R3": {
+      "index": "7",
+      "shortname": "R3",
+      "longname": "clab-ADA-Topology-R3",
+      "fqdn": "R3.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/R3",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.10",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::a",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:9d:3b:7c",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/R3",
+        "clab-node-longname": "clab-ADA-Topology-R3",
+        "clab-node-name": "R3",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "R4": {
+      "index": "8",
+      "shortname": "R4",
+      "longname": "clab-ADA-Topology-R4",
+      "fqdn": "R4.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/R4",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:ed:0f:0e",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/R4",
+        "clab-node-longname": "clab-ADA-Topology-R4",
+        "clab-node-name": "R4",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "R5": {
+      "index": "9",
+      "shortname": "R5",
+      "longname": "clab-ADA-Topology-R5",
+      "fqdn": "R5.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/R5",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.17",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::11",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:ea:08:40",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/R5",
+        "clab-node-longname": "clab-ADA-Topology-R5",
+        "clab-node-name": "R5",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "S1": {
+      "index": "10",
+      "shortname": "S1",
+      "longname": "clab-ADA-Topology-S1",
+      "fqdn": "S1.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/S1",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.16",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::10",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:92:a4:32",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/S1",
+        "clab-node-longname": "clab-ADA-Topology-S1",
+        "clab-node-name": "S1",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "S2": {
+      "index": "11",
+      "shortname": "S2",
+      "longname": "clab-ADA-Topology-S2",
+      "fqdn": "S2.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/S2",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.13",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::d",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:5f:37:46",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/S2",
+        "clab-node-longname": "clab-ADA-Topology-S2",
+        "clab-node-name": "S2",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "S3": {
+      "index": "12",
+      "shortname": "S3",
+      "longname": "clab-ADA-Topology-S3",
+      "fqdn": "S3.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/S3",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.14",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::e",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:14:81:16",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/S3",
+        "clab-node-longname": "clab-ADA-Topology-S3",
+        "clab-node-name": "S3",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "S4": {
+      "index": "13",
+      "shortname": "S4",
+      "longname": "clab-ADA-Topology-S4",
+      "fqdn": "S4.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/S4",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.8",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::8",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:e6:d9:45",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/S4",
+        "clab-node-longname": "clab-ADA-Topology-S4",
+        "clab-node-name": "S4",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    },
+    "Webserver": {
+      "index": "14",
+      "shortname": "Webserver",
+      "longname": "clab-ADA-Topology-Webserver",
+      "fqdn": "Webserver.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/Webserver",
+      "kind": "linux",
+      "image": "ubuntu-custom:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.4",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::4",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/Webserver",
+        "clab-node-longname": "clab-ADA-Topology-Webserver",
+        "clab-node-name": "Webserver",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 80,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "mgmt-switch": {
+      "index": "15",
+      "shortname": "mgmt-switch",
+      "longname": "clab-ADA-Topology-mgmt-switch",
+      "fqdn": "mgmt-switch.ADA-Topology.io",
+      "group": "",
+      "labdir": "/home/student/clab-ADA-Topology/mgmt-switch",
+      "kind": "ceos",
+      "image": "ceos:4.32.0F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.9",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::9",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:c5:5a:14",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76bc1cfde153",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/student/clab-ADA-Topology/mgmt-switch",
+        "clab-node-longname": "clab-ADA-Topology-mgmt-switch",
+        "clab-node-name": "mgmt-switch",
+        "clab-node-type": "",
+        "clab-owner": "student",
+        "clab-topo-file": "/home/student/ADA-Topology.clab.yaml",
+        "containerlab": "ADA-Topology"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "a": {
+        "node": "R1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:7b:07:96",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:2e:8c:d3",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "R1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:d7:43:4e",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:73:0a:9b",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S3",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:6d:a6:fd",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S4",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:e3:9e:11",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S3",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:4e:27:9f",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:ca:63:e8",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S4",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:b5:e7:e7",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:f6:9d:71",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S4",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:f0:57:96",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R4",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:2e:78:0f",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "R2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:36:00:6b",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:e9:d0:7d",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "R4",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:49:73:d4",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R5",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:ad:21:96",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "R5",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:ae:4e:a2",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R3",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:35:a4:63",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S1",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:2f:9d:cd",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S2",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:5b:8e:7d",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:3e:99:33",
+        "peer": "z"
+      },
+      "z": {
+        "node": "H1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:89:5c:e3",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S1",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:2a:db:15",
+        "peer": "z"
+      },
+      "z": {
+        "node": "H2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:ac:5c:e0",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:13:e2:f3",
+        "peer": "z"
+      },
+      "z": {
+        "node": "H3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:36:4c:8a",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "S2",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:91:73:9f",
+        "peer": "z"
+      },
+      "z": {
+        "node": "H4",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:75:55:60",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "R5",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:5f:19:71",
+        "peer": "z"
+      },
+      "z": {
+        "node": "Webserver",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:fc:cd:a1",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:5d:24:70",
+        "peer": "z"
+      },
+      "z": {
+        "node": "NMAS",
+        "interface": "mgmt0",
+        "mac": "aa:c1:ab:6e:1d:2a",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:54:b4:10",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S1",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:76:ff:a0",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:9f:77:57",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S2",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:e4:d8:a7",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:94:39:10",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R1",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:f4:51:c7",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:fa:52:1c",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R2",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:55:58:e3",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:b3:5b:cf",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S3",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:d1:8c:04",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth7",
+        "mac": "aa:c1:ab:8a:b4:80",
+        "peer": "z"
+      },
+      "z": {
+        "node": "S4",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:83:ab:fd",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth8",
+        "mac": "aa:c1:ab:f0:b3:0a",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R3",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:af:63:c9",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "mgmt-switch",
+        "interface": "eth9",
+        "mac": "aa:c1:ab:42:6f:43",
+        "peer": "z"
+      },
+      "z": {
+        "node": "R4",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:02:66:8f",
+        "peer": "a"
+      }
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Golden Configs</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        text-align: center;
+        padding: 40px;
+      }
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 20px;
+        color: #222;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+      }
+      p {
+        font-size: 1.1em;
+        margin-bottom: 25px;
+      }
+      .device-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      .device-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        padding: 20px;
+        width: 180px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .device-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      }
+      .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 0.95em;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 6px;
+        transition: background 0.3s;
+      }
+      .btn-blue { background: #2196F3; }
+      .btn-blue:hover { background: #1976D2; }
+      .back-link {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+      }
+      .back-link:hover {
+        background: #388E3C;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Golden Configuration - Devices</h1>
+	
+
+    <div class="device-container">
+      {% for name, ip in devices.items() %}
+        <div class="device-card">
+          <h3>{{ name }}</h3>
+          <p>{{ ip }}</p>
+          <a href="{{ url_for('golden_fetch', device_name=name) }}" class="btn btn-blue">Fetch & Download</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <a href="{{ url_for('index') }}" class="back-link">⬅ Back to Home</a>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div style="margin-top: 20px; color: red; font-weight: bold;">
+          {% for m in messages %}
+            <p>{{ m }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </body>
+</html>

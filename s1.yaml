@@ -1,0 +1,53 @@
+hostname: S1
+
+username: admin
+password: sha512:$6$foee2cEWSqPu5ev6$FJXlwx7DFR8BlppVbT5X3Er5AHpVSUp3nGTxVlPxjfSml9b0FvqlBnbrDKgveubIi52bdp/U4T2EgG1z6lqZw0
+
+snmp:
+  community: public
+  host: 10.0.0.1
+
+logging:
+  trap: critical
+  host: 10.0.0.1
+  facility: local7
+  source_interface: Ethernet5
+
+vlans:
+  - id: 10
+    name: Vlan-10
+  - id: 20
+    name: Vlan-20
+  - id: 30
+    name: Vlan-30
+
+interfaces:
+  - name: Ethernet1
+    mtu: 1500
+    mode: access
+    vlan: 10
+    trunk: true         # true → "switchport mode trunk" also enabled
+  - name: Ethernet2
+    mode: access
+    vlan: 10
+  - name: Ethernet3
+    mode: access
+    vlan: 20
+  - name: Ethernet4
+    mtu: 2000
+    mode: trunk
+    vlans: [10]         # allowed VLANs in trunk
+  - name: Ethernet5
+    mtu: 2000
+    mode: routed
+    ipv4: 10.0.0.2/24
+
+management:
+  ipv4: 172.20.20.16/24
+  ipv6: 3fff:172:20:20::10/64
+
+static_routes:
+  - prefix: 0.0.0.0/0
+    next_hop: 172.20.20.1
+  - prefix: "::/0"
+    next_hop: 3fff:172:20:20::1

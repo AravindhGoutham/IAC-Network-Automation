@@ -1,0 +1,100 @@
+! CE Device Configuration
+!
+hostname {{ hostname if hostname is defined else 'CE-DEVICE' }}
+!
+
+{% if username is defined and password is defined %}
+username {{ username }} role network-admin secret sha512 {{ password }}
+{% else %}
+! No local user defined
+{% endif %}
+!
+
+management api http-commands
+   protocol http port 50001
+   no shutdown
+!
+
+{% if snmp is defined %}
+snmp-server community {{ snmp.community }} rw
+snmp-server host {{ snmp.host }} version 2c {{ snmp.community }}
+snmp-server enable traps
+{% else %}
+! SNMP not configured
+{% endif %}
+!
+
+{% if logging is defined %}
+logging trap {{ logging.trap }}
+logging host {{ logging.host }}
+logging facility {{ logging.facility }}
+logging source-interface {{ logging.source_interface }}
+{% else %}
+! Logging not configured
+{% endif %}
+!
+
+{% if vlans is defined %}
+{% for vlan in vlans %}
+vlan {{ vlan.id }}
+   name {{ vlan.name }}
+{% endfor %}
+{% else %}
+! No VLANs defined
+{% endif %}
+!
+
+{% if interfaces is defined %}
+{% for iface in interfaces %}
+interface {{ iface.name }}
+   {% if iface.mtu is defined %}mtu {{ iface.mtu }}{% endif %}
+
+   {% if iface.mode == "access" %}
+   switchport access vlan {{ iface.vlan }}
+
+   {% elif iface.mode == "trunk" %}
+   switchport mode trunk
+
+   {% if iface.vlans is defined %}
+   encapsulation dot1q vlan {{ iface.vlans|join(',') }}
+   {% endif %}
+
+   {% elif iface.mode == "routed" %}
+   no switchport
+   ip address {{ iface.ipv4 }}
+
+   {% if iface.ipv6 is defined %}
+   ipv6 address {{ iface.ipv6 }}
+   {% endif %}
+   {% endif %}
+{% endfor %}
+{% else %}
+! No interfaces defined
+{% endif %}
+!
+
+{% if management is defined %}
+interface Management0
+   ip address {{ management.ipv4 }}
+   {% if management.ipv6 is defined %}
+   ipv6 address {{ management.ipv6 }}
+   {% endif %}
+{% else %}
+! No management interface defined
+{% endif %}
+!
+
+{% if static_routes is defined %}
+{% for route in static_routes %}
+{% if "::" in route.prefix %}
+ipv6 route {{ route.prefix }} {{ route.next_hop }}
+{% else %}
+ip route {{ route.prefix }} {{ route.next_hop }}
+{% endif %}
+{% endfor %}
+{% else %}
+! No static routes
+{% endif %}
+!
+
+end

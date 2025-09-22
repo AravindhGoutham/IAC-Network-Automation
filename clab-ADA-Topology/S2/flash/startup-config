@@ -1,0 +1,84 @@
+! Startup-config last modified at Tue Sep 16 01:57:48 2025 by root
+! device: S2 (cEOSLab, EOS-4.34.2F-43232954.4342F.1 (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$om5AanosFGmc.ex/$spuMv.W280uAaF614Dh23R0K1VUO8lPE9lxCaU8LEuG7RlSEdIqbSZjXLAOUiztAsxI8Vz8FQ.KTD5XimZ3dP.
+!
+management api http-commands
+   protocol http port 50001
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname S2
+!
+snmp-server community public rw
+snmp-server host 10.0.0.1 version 2c public
+snmp-server enable traps
+snmp-server enable traps snmp link-down
+snmp-server enable traps snmp link-up
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 20
+   name Vlan-20
+!
+vlan 30
+   name Vlan-30
+!
+management api gnmi
+   transport grpc default
+   !
+   transport grpc openmgmt
+      authorization requests
+   operation set persistence
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   mtu 1500
+   switchport mode trunk
+!
+interface Ethernet2
+   mtu 1500
+   switchport access vlan 10
+!
+interface Ethernet3
+   mtu 1500
+   switchport access vlan 30
+!
+interface Ethernet4
+   switchport mode trunk
+!
+interface Ethernet5
+   no switchport
+   ip address 10.0.0.3/24
+!
+interface Management0
+   ip address 172.20.20.13/24
+   ipv6 address 3fff:172:20:20::d/64
+!
+no ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

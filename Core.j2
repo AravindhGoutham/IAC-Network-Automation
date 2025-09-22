@@ -1,0 +1,171 @@
+! Core Device Configuration
+!
+hostname {{ hostname if hostname is defined else 'CORE-DEVICE' }}
+!
+
+{% if username is defined and password is defined %}
+username {{ username }} role network-admin secret {{ password }}
+{% else %}
+! No local user defined
+{% endif %}
+!
+
+management api http-commands
+   protocol http port 50001
+   no shutdown
+!
+
+{% if dhcp is defined %}
+dhcp server
+{% for subnet in dhcp.subnets %}
+   subnet {{ subnet.prefix }}
+      {% if subnet.range is defined %}
+      range {{ subnet.range.start }} {{ subnet.range.end }}
+      {% endif %}
+      {% if subnet.gateway is defined %}
+      default-gateway {{ subnet.gateway }}
+      {% endif %}
+!
+{% endfor %}
+{% else %}
+! No DHCP server configuration
+{% endif %}
+!
+
+{% if snmp is defined %}
+snmp-server community {{ snmp.community }} rw
+snmp-server host {{ snmp.host }} version 2c {{ snmp.community }}
+snmp-server enable traps
+{% for trap in snmp.traps %}
+snmp-server enable traps {{ trap }}
+{% endfor %}
+{% else %}
+! SNMP not configured
+{% endif %}
+!
+
+{% if vlans is defined %}
+{% for vlan in vlans %}
+vlan {{ vlan.id }}
+   name {{ vlan.name }}
+{% endfor %}
+{% else %}
+! No VLANs defined
+{% endif %}
+!
+
+{% if interfaces is defined %}
+{% for iface in interfaces %}
+interface {{ iface.name }}
+{% if iface.mode == "trunk" %}
+   switchport mode trunk
+{% elif iface.mode == "routed" %}
+   no switchport
+{% endif %}
+{% if iface.encapsulation is defined %}
+   encapsulation dot1q vlan {{ iface.encapsulation }}
+{% endif %}
+{% if iface.ipv4 is defined %}
+   ip address {{ iface.ipv4 }}
+{% endif %}
+{% if iface.ipv6 is defined %}
+   ipv6 address {{ iface.ipv6 }}
+{% endif %}
+{% if iface.dhcp_server_v4 is defined and iface.dhcp_server_v4 %}
+   dhcp server ipv4
+{% endif %}
+{% if iface.dhcp_server_v6 is defined and iface.dhcp_server_v6 %}
+   dhcp server ipv6
+{% endif %}
+{% if iface.vrrp is defined %}
+   {% if iface.vrrp.ipv4 is defined %}
+   vrrp {{ iface.vrrp.group }} ipv4 {{ iface.vrrp.ipv4 }}
+   {% endif %}
+   {% if iface.vrrp.ipv6 is defined %}
+   vrrp {{ iface.vrrp.group }} ipv6 {{ iface.vrrp.ipv6 }}
+   {% endif %}
+{% endif %}
+{% if iface.ospf is defined and iface.ospf.ipv6 is defined %}
+   ipv6 ospf {{ iface.ospf.process_id }} area {{ iface.ospf.area }}
+{% endif %}
+!
+{% endfor %}
+{% else %}
+! No interfaces defined
+{% endif %}
+!
+
+{% if management is defined %}
+interface Management0
+   ip address {{ management.ipv4 }}
+{% if management.ipv6 is defined %}
+   ipv6 address {{ management.ipv6 }}
+{% endif %}
+{% else %}
+! No management interface defined
+{% endif %}
+!
+
+ip routing
+ipv6 unicast-routing
+!
+
+{% if static_routes is defined %}
+{% for route in static_routes %}
+{% if "::" in route.prefix %}
+ipv6 route {{ route.prefix }} {{ route.next_hop }}
+{% else %}
+ip route {{ route.prefix }} {{ route.next_hop }}
+{% endif %}
+{% endfor %}
+{% else %}
+! No static routes
+{% endif %}
+!
+
+{% if ospf is defined %}
+router ospf {{ ospf.process_id }}
+{% if ospf.redistribute is defined %}
+{% for proto in ospf.redistribute %}
+   redistribute {{ proto }}
+{% endfor %}
+{% endif %}
+{% for net in ospf.networks %}
+   network {{ net.prefix }} area {{ net.area }}
+{% endfor %}
+   max-lsa {{ ospf.max_lsa if ospf.max_lsa is defined else 12000 }}
+{% else %}
+! No OSPFv2 configured
+{% endif %}
+!
+
+{% if ospfv3 is defined %}
+ipv6 router ospf {{ ospfv3.process_id }}
+   router-id {{ ospfv3.router_id }}
+{% if ospfv3.redistribute is defined %}
+{% for proto in ospfv3.redistribute %}
+   redistribute {{ proto }}
+{% endfor %}
+{% endif %}
+{% else %}
+! No OSPFv3 configured
+{% endif %}
+!
+
+{% if rip is defined %}
+router rip
+{% for net in rip.networks %}
+   network {{ net }}
+{% endfor %}
+{% if rip.redistribute is defined %}
+{% for proto in rip.redistribute %}
+   redistribute {{ proto }}
+{% endfor %}
+{% endif %}
+   no shutdown
+{% else %}
+! No RIP configured
+{% endif %}
+!
+
+end

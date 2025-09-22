@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>NSOT - Home</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #74ABE2, #5563DE);
+        color: #fff;
+        text-align: center;
+        padding: 50px;
+      }
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+      }
+      .btn {
+        display: inline-block;
+        padding: 15px 30px;
+        margin: 10px;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        background: #333;
+        border-radius: 8px;
+        transition: background 0.3s, transform 0.2s;
+      }
+      .btn:hover {
+        background: #ff9800;
+        transform: translateY(-3px);
+      }
+      .btn-blue { background: #2196F3; }
+      .btn-green { background: #4CAF50; }
+      .btn-orange { background: #FF5722; }
+      .btn-purple { background: #9C27B0; }
+    </style>
+  </head>
+  <body>
+    <h1>Network Source of Truth</h1>
+
+    <div>
+      <a href="{{ url_for('grafana') }}" class="btn btn-blue">Grafana Dashboard</a>
+      <a href="{{ url_for('add_device') }}" class="btn btn-green">Add Device</a>
+      <a href="{{ url_for('golden') }}" class="btn btn-orange">Golden Configuration</a>
+      <a href="{{ url_for('list_configs') }}" class="btn btn-purple">Saved Configs</a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div style="margin-top: 20px; color: yellow;">
+          {% for m in messages %}
+            <p>{{ m }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </body>
+</html>

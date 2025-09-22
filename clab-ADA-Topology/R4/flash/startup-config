@@ -1,0 +1,96 @@
+! Startup-config last modified at Sun Sep 14 19:38:20 2025 by root
+! device: R4 (cEOSLab, EOS-4.34.2F-43232954.4342F.1 (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$Pv1cQ5cOTHtZomcx$GVI1A7kGz067pHxxf4Yuw6NttmoRqsf.eEWiUgzPSYsHtewMe8JgjlNVNGxXThtOXD95v1drH14bwu2hBVH1f1
+!
+management api http-commands
+   protocol http port 50001
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname R4
+!
+snmp-server community public rw
+snmp-server host 10.0.0.1 version 2c public
+snmp-server enable traps
+snmp-server enable traps bgp
+snmp-server enable traps ospf if-state-change
+snmp-server enable traps ospfv3 if-state-change
+snmp-server enable traps snmp link-down
+snmp-server enable traps snmp link-up
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+management api gnmi
+   transport grpc default
+   !
+   transport grpc openmgmt
+      authorization requests
+   operation set persistence
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   no switchport
+   ip address 192.168.0.6/30
+   ipv6 address 2001:6::2/64
+!
+interface Ethernet2
+   no switchport
+   ip address 192.168.0.13/30
+   ipv6 address 2001:5::1/64
+   ipv6 ospf 1 area 0.0.0.0
+!
+interface Ethernet5
+   no switchport
+   ip address 10.0.0.9/24
+!
+interface Management0
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
+!
+ip routing
+!
+ipv6 unicast-routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router bgp 444
+   neighbor 192.168.0.5 remote-as 555
+   neighbor 2001:6::1 remote-as 555
+   !
+   address-family ipv6
+      neighbor 2001:6::1 activate
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+router ospf 1
+   redistribute bgp
+   network 192.168.0.12/30 area 0.0.0.0
+   max-lsa 12000
+!
+ipv6 router ospf 1
+   router-id 4.4.4.4
+   redistribute bgp
+   redistribute connected
+!
+end

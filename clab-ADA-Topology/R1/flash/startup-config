@@ -1,0 +1,126 @@
+! Startup-config last modified at Sun Sep 14 19:37:40 2025 by root
+! device: R1 (cEOSLab, EOS-4.34.2F-43232954.4342F.1 (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$2Bx7ddrhbLgX5Sn5$M/WJ9dFjBarZDTdaoH6ieFmgbtB9dlC6rIUHvY0MyQFtmMF.GuMHxNUzic77Iyha32zSMJaap7uXQ.nHxzIuf/
+!
+management api http-commands
+   protocol http port 50001
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname R1
+!
+snmp-server community public rw
+snmp-server host 10.0.0.1 version 2c public
+snmp-server enable traps
+snmp-server enable traps ospf if-state-change
+snmp-server enable traps ospfv3 if-state-change
+snmp-server enable traps snmp link-down
+snmp-server enable traps snmp link-up
+snmp-server enable traps vrrp
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 10
+   name Vlan-10
+!
+vlan 20
+   name Vlan-20
+!
+management api gnmi
+   transport grpc default
+   !
+   transport grpc openmgmt
+      authorization requests
+   operation set persistence
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   mtu 2000
+   no switchport
+!
+interface Ethernet1.10
+   encapsulation dot1q vlan 10
+   ip address 192.168.10.1/24
+   ip helper-address 192.168.0.26
+   ip helper-address 192.168.10.2
+   ipv6 dhcp relay destination 2001:ab10::2
+   ipv6 address 2001:ab10::1/64
+   vrrp 10 ipv4 192.168.10.254
+   vrrp 10 ipv6 2001:ab10::3
+!
+interface Ethernet1.20
+   encapsulation dot1q vlan 20
+   ip address 192.168.20.1/24
+   ip helper-address 192.168.0.26
+   ip helper-address 192.168.20.2
+   ipv6 dhcp relay destination 2001:ab20::2
+   ipv6 address 2001:ab20::1/64
+   vrrp 20 ipv4 192.168.20.254
+   vrrp 20 ipv6 2001:ab20::3
+!
+interface Ethernet1.30
+   encapsulation dot1q vlan 30
+   ipv6 dhcp relay destination 2001:ab30::2
+   ipv6 address 2001:ab30::1/64
+   vrrp 30 ipv6 2001:ab30::3
+!
+interface Ethernet2
+   no switchport
+   ip address 192.168.0.22/30
+   ipv6 address 2001:1::1/64
+   ipv6 ospf 1 area 0.0.0.0
+!
+interface Ethernet5
+   no switchport
+   ip address 10.0.0.4/24
+!
+interface Management0
+   ip address 172.20.20.18/24
+   ipv6 address 3fff:172:20:20::12/64
+!
+ip routing
+!
+ipv6 unicast-routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+router ospf 1
+   redistribute connected
+   redistribute rip
+   network 192.168.0.20/30 area 0.0.0.0
+   max-lsa 12000
+!
+ipv6 router ospf 1
+   router-id 1.1.1.1
+   redistribute connected
+!
+router rip
+   network 192.168.10.0/24
+   network 192.168.20.0/24
+   redistribute ospf
+   no shutdown
+!
+end

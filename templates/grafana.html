@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Grafana Dashboard</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #121212;
+        color: white;
+        text-align: center;
+      }
+      h1 {
+        padding: 15px;
+        margin: 0;
+        background: #20232a;
+        font-size: 1.5em;
+      }
+      iframe {
+        border: none;
+        width: 100%;
+        height: calc(100vh - 60px);
+      }
+      .back-link {
+        display: inline-block;
+        margin: 10px;
+        padding: 8px 16px;
+        background: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .back-link:hover {
+        background: #388E3C;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Grafana Dashboard</h1>
+    <a href="{{ url_for('index') }}" class="back-link">⬅ Back to Home</a>
+    <iframe src="{{ grafana_url }}"></iframe>
+  </body>
+</html>
