@@ -11,6 +11,8 @@
         (deviceType === "CE") ? "block" : "none";
       document.getElementById("core-options").style.display =
         (deviceType === "Core") ? "block" : "none";
+      document.getElementById("pe-options").style.display =
+        (deviceType === "PE") ? "block" : "none";
     }
 
     // CE helpers
@@ -121,6 +123,48 @@
       `;
       container.appendChild(div);
     }
+
+    // PE helpers
+    function addPEInterfaceField() {
+      const container = document.getElementById("pe-interface-list");
+      const div = document.createElement("div");
+      div.className = "grid grid-cols-4 gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="pe_interfaces[][name]" placeholder="Interface Name" class="border p-2">
+        <input type="text" name="pe_interfaces[][ipv4]" placeholder="IPv4 Address" class="border p-2">
+        <input type="text" name="pe_interfaces[][ipv6]" placeholder="IPv6 Address" class="border p-2">
+        <select name="pe_interfaces[][ospf]" class="border p-2">
+          <option value="no">IPv6 OSPF: No</option>
+          <option value="yes">IPv6 OSPF: Yes</option>
+        </select>
+      `;
+      container.appendChild(div);
+    }
+
+    function addPEOSPFNetworkField() {
+      const container = document.getElementById("pe-ospf-network-list");
+      const div = document.createElement("div");
+      div.className = "flex gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="ospf_networks[][prefix]" placeholder="Network Prefix" class="border p-2 w-1/2">
+        <input type="text" name="ospf_networks[][area]" placeholder="Area" class="border p-2 w-1/2">
+      `;
+      container.appendChild(div);
+    }
+
+    function addBGPNeighborField() {
+      const container = document.getElementById("bgp-neighbor-list");
+      const div = document.createElement("div");
+      div.className = "grid grid-cols-3 gap-2 mb-2";
+      div.innerHTML = `
+        <input type="text" name="bgp_neighbors[][ip]" placeholder="Neighbor IP" class="border p-2">
+        <input type="text" name="bgp_neighbors[][remote_as]" placeholder="Remote AS" class="border p-2">
+        <label class="flex items-center gap-1">
+          <input type="checkbox" name="bgp_neighbors[][activate_ipv6]" value="1"> Activate IPv6
+        </label>
+      `;
+      container.appendChild(div);
+    }
   </script>
 </head>
 <body class="p-10 bg-gray-100">
@@ -186,6 +230,33 @@
       <h2 class="font-bold mt-6 mb-2">RIP Configuration</h2>
       <div id="rip-network-list"></div>
       <button type="button" onclick="addRIPNetworkField()" class="bg-yellow-500 text-white px-3 py-1 rounded">+ Add RIP Network</button>
+    </div>
+
+    <!-- PE Options -->
+    <div id="pe-options" style="display:none;">
+      <h2 class="font-bold mt-6 mb-2">PE Interface Details</h2>
+      <div id="pe-interface-list"></div>
+      <button type="button" onclick="addPEInterfaceField()" class="bg-green-500 text-white px-3 py-1 rounded">+ Add Interface</button>
+
+      <h2 class="font-bold mt-6 mb-2">Static IPv4 Routes</h2>
+      <div id="pe-ipv4-route-list"></div>
+      <button type="button" onclick="addIPv4RouteField('pe-ipv4-route-list')" class="bg-purple-500 text-white px-3 py-1 rounded">+ Add IPv4 Route</button>
+
+      <h2 class="font-bold mt-6 mb-2">Static IPv6 Routes</h2>
+      <div id="pe-ipv6-route-list"></div>
+      <button type="button" onclick="addIPv6RouteField('pe-ipv6-route-list')" class="bg-pink-500 text-white px-3 py-1 rounded">+ Add IPv6 Route</button>
+
+      <h2 class="font-bold mt-6 mb-2">OSPF Configuration</h2>
+      <label class="block">Router ID:</label>
+      <input type="text" name="ospf_router_id" placeholder="e.g. 3.3.3.3" class="border p-2 w-full mb-2">
+      <div id="pe-ospf-network-list"></div>
+      <button type="button" onclick="addPEOSPFNetworkField()" class="bg-indigo-500 text-white px-3 py-1 rounded">+ Add OSPF Network</button>
+
+      <h2 class="font-bold mt-6 mb-2">BGP Configuration</h2>
+      <label class="block">Local AS:</label>
+      <input type="text" name="bgp_local_as" placeholder="e.g. 333" class="border p-2 w-full mb-2">
+      <div id="bgp-neighbor-list"></div>
+      <button type="button" onclick="addBGPNeighborField()" class="bg-red-500 text-white px-3 py-1 rounded">+ Add BGP Neighbor</button>
     </div>
 
     <div class="mt-6">

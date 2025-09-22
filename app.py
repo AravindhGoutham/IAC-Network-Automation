@@ -93,9 +93,12 @@ def add_device():
             if not n:
                 continue
             iface = {"name": n, "mode": m}
-            if ip4: iface["ipv4"] = ip4
-            if ip6: iface["ipv6"] = ip6
-            if vlan: iface["vlan"] = vlan
+            if ip4:
+                iface["ipv4"] = ip4
+            if ip6:
+                iface["ipv6"] = ip6
+            if vlan:
+                iface["vlan"] = vlan
             interfaces.append(iface)
         if interfaces:
             device["interfaces"] = interfaces
@@ -120,9 +123,7 @@ def add_device():
         if static_routes:
             device["static_routes"] = static_routes
 
-
-
-	# Core
+        # Core
         if device["device_type"] == "Core":
             # Core Interfaces
             core_interfaces = []
@@ -172,6 +173,7 @@ def add_device():
             device["rip"] = {
                 "networks": rip_networks if rip_networks else []
             }
+
         # DHCP Server
         dhcp_subnets = []
         prefixes = data.get("dhcp_subnets[][prefix]", [])
@@ -191,6 +193,60 @@ def add_device():
                 dhcp_subnets.append(subnet)
         if dhcp_subnets:
             device["dhcp"] = {"subnets": dhcp_subnets}
+
+        # PE
+        if device["device_type"] == "PE":
+            # Interfaces
+            pe_interfaces = []
+            p_names = data.get("pe_interfaces[][name]", [])
+            p_ipv4s = data.get("pe_interfaces[][ipv4]", [])
+            p_ipv6s = data.get("pe_interfaces[][ipv6]", [])
+            p_ospfs = data.get("pe_interfaces[][ospf]", [])
+            for n, ip4, ip6, ospf_flag in zip(p_names, p_ipv4s, p_ipv6s, p_ospfs):
+                if not n:
+                    continue
+                iface = {"name": n}
+                if ip4:
+                    iface["ipv4"] = ip4
+                if ip6:
+                    iface["ipv6"] = ip6
+                if ospf_flag == "yes":
+                    iface["ospf"] = {"process_id": 1, "area": "0.0.0.0"}
+                pe_interfaces.append(iface)
+            if pe_interfaces:
+                device["interfaces"] = pe_interfaces
+
+            # OSPF
+            ospf_router_id = data.get("ospf_router_id", [""])[0]
+            ospf_networks = []
+            net_prefixes = data.get("ospf_networks[][prefix]", [])
+            net_areas = data.get("ospf_networks[][area]", [])
+            for p, a in zip(net_prefixes, net_areas):
+                if p and a:
+                    ospf_networks.append({"prefix": p, "area": a})
+            device["ospf"] = {
+                "process_id": 1,
+                "router_id": ospf_router_id if ospf_router_id else "0.0.0.0",
+                "networks": ospf_networks if ospf_networks else []
+            }
+
+            # BGP
+            local_as = data.get("bgp_local_as", [""])[0]
+            neighbors = []
+            n_ips = data.get("bgp_neighbors[][ip]", [])
+            n_asns = data.get("bgp_neighbors[][remote_as]", [])
+            n_actives = data.get("bgp_neighbors[][activate_ipv6]", [])
+            for ip, ras, act in zip(n_ips, n_asns, n_actives):
+                if ip and ras:
+                    neighbors.append({
+                        "ip": ip,
+                        "remote_as": ras,
+                        "activate_ipv6": True if act == "1" else False
+                    })
+            device["bgp"] = {
+                "local_as": local_as,
+                "neighbors": neighbors
+            }
 
         # Save YAML
         filename = f"{device['hostname']}.yaml"
