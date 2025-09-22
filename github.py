@@ -46,7 +46,7 @@ def push_changes(repo, branch='main', username=None, token=None, github_url=None
 
 def main():
     repo_dir = os.path.expanduser("~/iac-netman")
-    github_url = "https://github.com/AravindhGoutham/ANA-Robocorp.git"
+    github_url = "https://github.com/AravindhGoutham/IAC-Network-Automation.git"
     username = "AravindhGoutham"
     token = getpass.getpass("Enter your GitHub personal access token (hidden): ")
     branch = "main"
