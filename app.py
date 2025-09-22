@@ -12,6 +12,9 @@ app.secret_key = "aravindh"
 CONFIG_DIR = Path("/home/student/Golden-Config")
 CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
+YAML_DIR = Path("/home/student/iac-netman")
+YAML_DIR.mkdir(parents=True, exist_ok=True)
+
 DEVICES = {
     "S1": "10.0.0.2",
     "S2": "10.0.0.3",
@@ -250,7 +253,7 @@ def add_device():
 
         # Save YAML
         filename = f"{device['hostname']}.yaml"
-        file_path = CONFIG_DIR / filename
+        file_path = YAML_DIR / filename
         with open(file_path, "w") as f:
             yaml.dump(device, f)
 
