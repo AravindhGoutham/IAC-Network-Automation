@@ -24,28 +24,25 @@
         font-weight: bold;
         text-decoration: none;
         color: #fff;
-        background: #333;
+        background: #2196F3; /* Unified color */
         border-radius: 8px;
         transition: background 0.3s, transform 0.2s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
       }
       .btn:hover {
-        background: #ff9800;
+        background: #1976D2; /* Darker blue hover */
         transform: translateY(-3px);
       }
-      .btn-blue { background: #2196F3; }
-      .btn-green { background: #4CAF50; }
-      .btn-orange { background: #FF5722; }
-      .btn-purple { background: #9C27B0; }
     </style>
   </head>
   <body>
     <h1>Network Source of Truth</h1>
 
     <div>
-      <a href="{{ url_for('grafana') }}" class="btn btn-blue">Grafana Dashboard</a>
-      <a href="{{ url_for('add_device') }}" class="btn btn-green">Add Device</a>
-      <a href="{{ url_for('golden') }}" class="btn btn-orange">Golden Configuration</a>
-      <a href="{{ url_for('list_configs') }}" class="btn btn-purple">Saved Configs</a>
+      <a href="{{ url_for('grafana') }}" class="btn">Grafana Dashboard</a>
+      <a href="{{ url_for('add_device') }}" class="btn">Add Device</a>
+      <a href="{{ url_for('golden') }}" class="btn">Golden Configuration</a>
+      <a href="{{ url_for('list_configs') }}" class="btn">Saved Configs</a>
     </div>
 
     {% with messages = get_flashed_messages() %}

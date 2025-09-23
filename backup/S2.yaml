@@ -1,0 +1,36 @@
+hostname: S2
+device_type: CE
+
+vlans:
+  - id: 20
+    name: Vlan-20
+  - id: 30
+    name: Vlan-30
+
+interfaces:
+  - name: Ethernet1
+    mode: trunk
+    mtu: 2000
+  - name: Ethernet2
+    mode: access
+    vlan: 10
+    mtu: 1500
+  - name: Ethernet3
+    mode: access
+    vlan: 30
+    mtu: 1500
+  - name: Ethernet4
+    mode: trunk
+  - name: Ethernet5
+    mode: routed
+    ipv4: 10.0.0.3/24
+  - name: Management0
+    mode: routed
+    ipv4: 172.20.20.13/24
+    ipv6: 3fff:172:20:20::d/64
+
+static_routes:
+  - prefix: 0.0.0.0/0
+    next_hop: 172.20.20.1
+  - prefix: "::/0"
+    next_hop: 3fff:172:20:20::1

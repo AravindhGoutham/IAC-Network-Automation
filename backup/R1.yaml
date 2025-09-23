@@ -1,0 +1,90 @@
+hostname: R1
+device_type: Core
+
+vlans:
+  - id: 10
+    name: Vlan-10
+  - id: 20
+    name: Vlan-20
+
+interfaces:
+  - name: Ethernet1
+    mode: routed
+    mtu: 2000
+
+  - name: Ethernet1.10
+    vlan: 10
+    ipv4: 192.168.10.1/24
+    ipv6: 2001:ab10::1/64
+    dhcp_relay:
+      ipv4_helpers:
+        - 192.168.0.26
+        - 192.168.10.2
+      ipv6_helpers:
+        - 2001:ab10::2
+    vrrp:
+      ipv4: 192.168.10.254
+      ipv6: 2001:ab10::3
+
+  - name: Ethernet1.20
+    vlan: 20
+    ipv4: 192.168.20.1/24
+    ipv6: 2001:ab20::1/64
+    dhcp_relay:
+      ipv4_helpers:
+        - 192.168.0.26
+        - 192.168.20.2
+      ipv6_helpers:
+        - 2001:ab20::2
+    vrrp:
+      ipv4: 192.168.20.254
+      ipv6: 2001:ab20::3
+
+  - name: Ethernet1.30
+    vlan: 30
+    ipv6: 2001:ab30::1/64
+    dhcp_relay:
+      ipv6_helpers:
+        - 2001:ab30::2
+    vrrp:
+      ipv6: 2001:ab30::3
+
+  - name: Ethernet2
+    mode: routed
+    ipv4: 192.168.0.22/30
+    ipv6: 2001:1::1/64
+    ospf:
+      process_id: 1
+      area: 0.0.0.0
+
+  - name: Ethernet5
+    mode: routed
+    ipv4: 10.0.0.4/24
+
+  - name: Management0
+    mode: routed
+    ipv4: 172.20.20.18/24
+    ipv6: 3fff:172:20:20::12/64
+
+static_routes:
+  - prefix: 0.0.0.0/0
+    next_hop: 172.20.20.1
+  - prefix: "::/0"
+    next_hop: 3fff:172:20:20::1
+
+ospf:
+  process_id: 1
+  router_id: 1.1.1.1
+  networks:
+    - prefix: 192.168.0.20/30
+      area: 0.0.0.0
+  redistribute:
+    - connected
+    - rip
+
+rip:
+  networks:
+    - 192.168.10.0/24
+    - 192.168.20.0/24
+  redistribute:
+    - ospf
